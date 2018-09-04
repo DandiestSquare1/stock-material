@@ -45,7 +45,7 @@ class AppBar extends React.Component {
               <MenuIcon />
             </IconButton>
             <Typography variant='title' color='inherit' className={classes.appTitle}>
-              Material Base
+              Stock Manager
             </Typography>
           </Toolbar>
         </Bar>

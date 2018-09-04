@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux'
 import { ConnectedRouter } from 'connected-react-router'
+import 'typeface-roboto'
 
 import './index.css';
 import App from './components/App';
