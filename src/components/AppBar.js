@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Link } from 'react-router-dom'
 
 // material imports
 import Bar from '@material-ui/core/AppBar'
@@ -8,13 +7,14 @@ import Drawer from '@material-ui/core/Drawer'
 import Toolbar from '@material-ui/core/Toolbar'
 import IconButton from '@material-ui/core/IconButton'
 import List from '@material-ui/core/List'
-import ListItem from '@material-ui/core/ListItem'
-import ListItemText from '@material-ui/core/ListItemText'
-import ListItemIcon from '@material-ui/core/ListItemIcon'
 import Typography from '@material-ui/core/Typography'
 import MenuIcon from '@material-ui/icons/Menu'
-import HomeIcon from '@material-ui/icons/Home'
+import LabelIcon from '@material-ui/icons/Label'
+import BarChartIcon from '@material-ui/icons/BarChart'
+import ViewListIcon from '@material-ui/icons/ViewList'
 import { withStyles } from '@material-ui/core/styles'
+
+import SideLink from './SideLink'
 
 class AppBar extends React.Component {
   static propTypes = {
@@ -55,10 +55,10 @@ class AppBar extends React.Component {
             onClick={this.close}
             onKeyDown={this.close}
           >
-            <ListItem button={true} component={Link} to='/'>
-              <ListItemIcon><HomeIcon /></ListItemIcon>
-              <ListItemText>Home</ListItemText>
-            </ListItem>
+            <SideLink to='/items' text='Stocks' icon={ViewListIcon}/>
+            <SideLink to='/reports' text='Reports' icon={BarChartIcon}/>
+            <SideLink to='/labels' text='Labels' icon={LabelIcon}/>
+            <SideLink to='/scanner' text='Scanner' />
           </List>
         </Drawer>
       </React.Fragment>
