@@ -1,12 +1,12 @@
 import { combineEpics } from 'redux-observable'
-import { filter, mapTo } from 'rxjs/operators'
+import { filter, map } from 'rxjs/operators'
 
-import { PING, pong } from '../actions'
+import actions from '../actions'
 
-const pingEpic = action$ => action$.pipe(
-  filter(action => action.type === PING),
-  mapTo(pong())
+const deleteItemEpic = action$ => action$.pipe(
+  filter(action => action.type === 'ITEMS/DELETE/REQUEST'),
+  map(action => actions.items.delete.success(action.payload))
 )
 
-export default combineEpics(pingEpic)
+export default combineEpics(deleteItemEpic)
 

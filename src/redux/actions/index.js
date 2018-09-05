@@ -1,19 +1,18 @@
+import { createActions } from 'redux-actions'
 
-import {
-  DELETE_ITEM_REQUEST,
-  DELETE_ITEM_SUCCESS,
-  DELETE_ITEM_FAILURE,
-} from '../constants'
+const actions =  createActions({
+  ITEMS: {
+    DELETE: {
+      REQUEST: id => id,
+      SUCCESS: id => id,
+      FAILURE: (id, error) => ({ id, error })
+    },
+    ADD: {
+      REQUEST: item => item,
+      SUCCESS: item => item,
+      FAILURE: (item, error) => ({ item, error })
+    }
+  }
+})
 
-export const PING = 'PING'
-export const ping = () => ({ type: PING })
-
-export const PONG = 'PONG'
-export const pong = () => ({ type: PONG })
-
-
-export const deleteItem = {
-  request: id => ({ type: DELETE_ITEM_REQUEST, id }),
-  success: id => ({ type: DELETE_ITEM_SUCCESS, id }),
-  failure: error => ({ type: DELETE_ITEM_FAILURE, error }),
-}
+export default actions
