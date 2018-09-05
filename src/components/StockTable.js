@@ -11,7 +11,7 @@ import TablePagination from '@material-ui/core/TablePagination'
 import { withStyles } from '@material-ui/core/styles'
 
 import StockTableHead from './StockTableHead'
-
+import StockTableToolbar from './StockTableToolbar'
 
 function desc(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -41,8 +41,10 @@ function getSorting(order, orderBy) {
 
 class StockTable extends Component {
   static propTypes = {
+    classes: PropTypes.object.isRequired,
     items: PropTypes.array.isRequired,
-    classes: PropTypes.object.isRequired
+    // (id | [id]) => void
+    onDelete: PropTypes.func.isRequired
   }
 
   static styles = {
@@ -110,6 +112,12 @@ class StockTable extends Component {
     this.setState({ rowsPerPage: event.target.value })
   }
 
+  handleDelete = event => {
+    //console.log('really delete items', this.state.selected.join(', '), '?') //eslint-disable-line
+    this.props.onDelete(this.state.selected)
+    this.setState({ selected: [] })
+  }
+
   isSelected = id => this.state.selected.indexOf(id) !== -1
 
   render() {
@@ -119,6 +127,7 @@ class StockTable extends Component {
 
     return (
       <Paper className={classes.root}>
+        <StockTableToolbar selectedCount={selected.length} onDeleteClick={this.handleDelete}/>
         <div className={classes.tableWrapper}>
           <Table>
             <StockTableHead
