@@ -3,6 +3,7 @@ import { handleActions } from 'redux-actions'
 import pickBy from 'lodash/pickBy'
 
 import Status from '../status'
+import actions from '../actions'
 
 const defaultEntities = {
   '001': { id: '001', name: 'Banana', quantity: 4 },
@@ -37,24 +38,33 @@ const defaultStatuses = {
 }
 
 const entities = handleActions({
-  'ITEMS/ADD/SUCCESS': (state, action) => Object.assign({}, state, {
+  [actions.items.add.success]: (state, action) => Object.assign({}, state, {
     [action.payload.id] : action.payload
   }),
-  'ITEMS/DELETE/SUCCESS': (state, action) => pickBy(state, item => action.payload !== item.id)
+  [actions.items.delete.success]: (state, action) => pickBy(state, item => action.payload !== item.id)
 }, defaultEntities)
 
 const status = handleActions({
-  'ITEMS/ADD/SUCCESS': (state, action) => Object.assign({}, state, {
+  [actions.items.add.success]: (state, action) => Object.assign({}, state, {
     [action.payload.id]: Status.Loaded
   }),
-  'ITEMS/DELETE/REQUEST': (state, action) => Object.assign({}, state, {
+  [actions.items.delete.request]: (state, action) => Object.assign({}, state, {
     [action.payload]: Status.Deleting
   }),
-  'ITEMS/DELETE/SUCCESS': (state, action) => pickBy(state, (item, key) => key !== action.payload)
+  [actions.items.delete.success]: (state, action) => pickBy(state, (item, key) => key !== action.payload)
 }, defaultStatuses)
 
+
 const error = handleActions({
+  [actions.items.delete.failure]: (state, { payload: { id, error }}) => ({
+    ...state,
+    [id]: error
+  }),
+  [actions.items.add.failure]: (state, { payload: { item, error }}) => ({
+    ...state,
+    [item.id]: error
+  })
+}, {})
 
-})
 
-export default combineReducers({ entities, status })
+export default combineReducers({ entities, status, error })

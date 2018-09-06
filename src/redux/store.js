@@ -14,12 +14,14 @@ function configureStore(initialState) {
     routerMiddleware(history),
     epicMiddleware
   ]
-  const enhancer = composeWithDevTools(applyMiddleware(...middlewares))
+  const enhancer = composeWithDevTools({
+    serialize: true
+  })
   const reducers = connectRouter(history)(rootReducer)
   return createStore(
     reducers,
     initialState,
-    enhancer
+    enhancer(applyMiddleware(...middlewares))
   )
 }
 

@@ -5,12 +5,12 @@ const actions =  createActions({
     DELETE: {
       REQUEST: id => id,
       SUCCESS: id => id,
-      FAILURE: (id, error) => ({ id, error })
+      FAILURE: (id, error) => ({ id, error: error.message })
     },
     ADD: {
       REQUEST: item => item,
       SUCCESS: item => item,
-      FAILURE: (item, error) => ({ item, error })
+      FAILURE: (item, error) => ({ item, error: error.message })
     }
   }
 })
