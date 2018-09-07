@@ -145,7 +145,7 @@ class StockTable extends Component {
                           </TableCell>
                         </Tooltip>
                       ) : (
-                        <TableCell>No full level</TableCell>
+                        <TableCell>N/A</TableCell>
                       )}
                     </TableRow>
                   )

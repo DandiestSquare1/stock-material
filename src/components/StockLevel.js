@@ -4,36 +4,26 @@ import LinearProgress from '@material-ui/core/LinearProgress'
 import { withStyles } from '@material-ui/core/styles'
 import { lighten } from '@material-ui/core/styles/colorManipulator'
 
-const highLevelColor = '#008000'
+const highLevelColor = '#00ff00'
+const mediumLevelColor = '#ffff00'
 const lowLevelColor = '#ff0000'
 
-const styles = {
-  highRoot: { backgroundColor: lighten(highLevelColor, 0.85) },
-  highBar: { backgroundColor: highLevelColor },
-  lowRoot: { backgroundColor: lighten(lowLevelColor, 0.85) },
-  lowBar: { backgroundColor: lowLevelColor }
-}
+const StockLevel = ({ level }) => {
+  const CustomLinearProgress = withStyles({
+    root: { background: `linear-gradient(to right, ${lighten(lowLevelColor, 0.85)}, ${lighten(mediumLevelColor)}, ${lighten(highLevelColor, 0.85)})` },
+    bar: { background: `linear-gradient(to right, ${lowLevelColor}, ${mediumLevelColor}, ${highLevelColor} ${Math.max(100, 100 / level * 100)}%)` }
+  })(LinearProgress)
 
-const StockLevel = ({ level, classes }) => {
-  let styleClasses = { }
-  console.log(level) // eslint-disable-line
-  if (level < 40) {
-    styleClasses = { root: classes.lowRoot, bar: classes.lowBar }
-  } else if (level >= 80) {
-    styleClasses = { root: classes.highRoot, bar: classes.highBar }
-  }
   return (
-    <LinearProgress
+    <CustomLinearProgress
       variant='determinate'
       value={level}
-      classes={styleClasses}
     />
   )
 }
 
 StockLevel.propTypes = {
-  level: PropTypes.number.isRequired,
-  classes: PropTypes.object.isRequired
+  level: PropTypes.number.isRequired
 }
 
-export default withStyles(styles)(StockLevel)
+export default StockLevel
