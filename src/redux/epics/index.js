@@ -18,8 +18,13 @@ const addItemEpic = action$ => action$.pipe(
   map(action => actions.items.add.success({ id: uuid(), ...action.payload }))
 )
 
-export default combineEpics(
-  deleteItemEpic,
-  addItemEpic
+const selectAllEpic = (action$, state) => action$.pipe(
+  ofType(actions.table.selectAll.request),
+  map(action => actions.table.selectAll.success(Object.keys(state.value.items.entities)))
 )
 
+export default combineEpics(
+  deleteItemEpic,
+  addItemEpic,
+  selectAllEpic
+)

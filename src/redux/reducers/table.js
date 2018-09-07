@@ -8,7 +8,7 @@ export default handleActions({
   [table.setPage]: (state, { payload }) => Object.assign({}, state, {
     page: payload
   }),
-  
+
   [table.sortBy]: (state, action) => {
     const orderBy = action.payload
     let order = 'desc'
@@ -39,7 +39,15 @@ export default handleActions({
     })
   },
 
-  [actions.table.setRowsPerPage]: (state, action) => Object.assign({}, state, {
+  [table.selectAll.success]: (state, { payload }) => Object.assign({}, state, {
+    selected: payload
+  }),
+
+  [table.unselectAll]: state => Object.assign({}, state, {
+    selected: []
+  }),
+
+  [table.setRowsPerPage]: (state, action) => Object.assign({}, state, {
     rowsPerPage: action.payload
   }),
 }, {

@@ -30,7 +30,15 @@ const mapDispatchToProps = dispatch => ({
 
   onSortClick: property => dispatch(actions.table.sortBy(property)),
 
-  toggleSelection: id => dispatch(actions.table.toggleItemSelection(id))
+  toggleSelection: id => {
+    if(id === 'all') {
+      dispatch(actions.table.selectAll.request())
+    } else if (id === 'none'){
+      dispatch(actions.table.unselectAll())
+    } else {
+      dispatch(actions.table.toggleItemSelection(id))
+    }
+  }
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(StockTable)

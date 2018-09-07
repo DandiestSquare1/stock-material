@@ -76,9 +76,10 @@ class StockTable extends Component {
 
   handleSelectAllClick = event => {
     if (event.target.checked) {
-      return
+      this.props.toggleSelection('all')
+    } else {
+      this.props.toggleSelection('none')
     }
-    this.setState({ selected: [] })
   }
 
   handleClick = (event, id) => this.props.toggleSelection(id)
