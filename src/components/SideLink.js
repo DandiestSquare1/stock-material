@@ -13,7 +13,8 @@ const SideLink = ({ to, text, icon }) => {
       {icon && <ListItemIcon><IconProp /></ListItemIcon>}
       <ListItemText inset={!icon}>{text}</ListItemText>
     </ListItem>
-  )}
+  )
+}
 
 SideLink.propTypes = {
   to: PropTypes.string.isRequired,
