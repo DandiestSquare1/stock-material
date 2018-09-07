@@ -44,7 +44,22 @@ class StockTable extends Component {
     classes: PropTypes.object.isRequired,
     items: PropTypes.array.isRequired,
     // (id | [id]) => void
-    onDelete: PropTypes.func.isRequired
+    onDelete: PropTypes.func.isRequired,
+
+    page: PropTypes.number.isRequired,
+    rowsPerPage: PropTypes.number.isRequired,
+    order: PropTypes.oneOf(['asc', 'desc']).isRequired,
+    orderBy: PropTypes.oneOf(['id', 'name', 'quantity']).isRequired,
+    selected: PropTypes.arrayOf(PropTypes.string).isRequired,
+
+    // (page) => void
+    onChangePage: PropTypes.func.isRequired,
+    // (property) => void
+    onSortClick: PropTypes.func.isRequired,
+    // (itemId | 'all' | 'none') => void
+    toggleSelection: PropTypes.func.isRequired,
+    // (rows) => void
+    onChangeRowsPerPage: PropTypes.func.isRequired,
   }
 
   static styles = {
@@ -56,73 +71,28 @@ class StockTable extends Component {
     }
   }
 
-  state = {
-    order: 'asc',
-    orderBy: 'id',
-    selected: [],
-    page: 0,
-    rowsPerPage: 5
-  }
+  handleRequestSort = (even, property) => this.props.onSortClick(property)
 
-  handleRequestSort = (even, property) => {
-    const orderBy = property
-    let order = 'desc'
-
-    if (this.state.orderBy === property && this.state.order === 'desc') {
-      order = 'asc'
-    }
-
-    this.setState({ order, orderBy })
-  }
 
   handleSelectAllClick = event => {
     if (event.target.checked) {
-      this.setState(state => ({ selected: this.props.items.map(n => n.id) }))
       return
     }
     this.setState({ selected: [] })
   }
 
-  handleClick = (event, id) => {
-    const { selected } = this.state;
-    const selectedIndex = selected.indexOf(id);
-    let newSelected = [];
+  handleClick = (event, id) => this.props.toggleSelection(id)
 
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, id);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1),
-      );
-    }
-    this.setState({ selected: newSelected })
-  }
+  handleChangePage = (event, page) => this.props.onChangePage(page)
 
+  handleChangeRowsPerPage = event => this.props.onChangeRowsPerPage(event.target.value)
 
-  handleChangePage = (event, page) => {
-    this.setState({ page })
-  }
+  handleDelete = event => this.props.onDelete(this.props.selected)
 
-  handleChangeRowsPerPage = event => {
-    this.setState({ rowsPerPage: event.target.value })
-  }
-
-  handleDelete = event => {
-    //console.log('really delete items', this.state.selected.join(', '), '?') //eslint-disable-line
-    this.props.onDelete(this.state.selected)
-    this.setState({ selected: [] })
-  }
-
-  isSelected = id => this.state.selected.indexOf(id) !== -1
+  isSelected = id => this.props.selected.indexOf(id) !== -1
 
   render() {
-    const { items, classes } = this.props
-    const { orderBy, order, selected, page, rowsPerPage } = this.state
+    const { items, classes, orderBy, order, selected, page, rowsPerPage } = this.props
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, items.length - page * rowsPerPage)
 
     return (
