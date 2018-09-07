@@ -4,13 +4,13 @@ import uuid from 'uuid/v4'
 
 import actions from '../actions'
 
-function ofType(type) {
+function ofType (type) {
   return filter(action => action.type === type.toString())
 }
 
 const deleteItemEpic = action$ => action$.pipe(
   ofType(actions.items.delete.request),
-  map(action => actions.items.delete.success(action.payload)),
+  map(action => actions.items.delete.success(action.payload))
 )
 
 const addItemEpic = action$ => action$.pipe(

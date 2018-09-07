@@ -9,14 +9,13 @@ import TableSortLabel from '@material-ui/core/TableSortLabel'
 import Tooltip from '@material-ui/core/Tooltip'
 
 const columns = [
-  { id: 'id', numeric: false, label: 'ID'},
+  { id: 'id', numeric: false, label: 'ID' },
   { id: 'name', numeric: false, label: 'Name' },
   { id: 'quantity', numeric: true, label: 'Quantity' },
   { id: 'level', numeric: false, label: 'Level' }
 ]
 
 class StockTableHead extends Component {
-
   static propTypes = {
     orderBy: PropTypes.string.isRequired,
     order: PropTypes.string.isRequired,
@@ -30,7 +29,7 @@ class StockTableHead extends Component {
     this.props.onRequestSort(event, property)
   }
 
-  render() {
+  render () {
     const { onSelectAllClick, orderBy, order, rowCount, selectedRowCount } = this.props
     return (
       <TableHead>
@@ -50,7 +49,7 @@ class StockTableHead extends Component {
             >
               <Tooltip
                 title='Sort'
-                placement={column.numeric ? 'bottom-end': 'bottom-start'}
+                placement={column.numeric ? 'bottom-end' : 'bottom-start'}
               >
                 <TableSortLabel
                   active={orderBy === column.id}

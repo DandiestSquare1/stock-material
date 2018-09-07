@@ -4,10 +4,10 @@ import PropTypes from 'prop-types'
 import Checkbox from '@material-ui/core/Checkbox'
 import LinearProgress from '@material-ui/core/LinearProgress'
 import Paper from '@material-ui/core/Paper'
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableRow from '@material-ui/core/TableRow';
+import Table from '@material-ui/core/Table'
+import TableBody from '@material-ui/core/TableBody'
+import TableCell from '@material-ui/core/TableCell'
+import TableRow from '@material-ui/core/TableRow'
 import TablePagination from '@material-ui/core/TablePagination'
 import Tooltip from '@material-ui/core/Tooltip'
 import { withStyles } from '@material-ui/core/styles'
@@ -15,33 +15,31 @@ import { withStyles } from '@material-ui/core/styles'
 import StockTableHead from './StockTableHead'
 import StockTableToolbar from './StockTableToolbar'
 
-function desc(a, b, orderBy) {
+function desc (a, b, orderBy) {
   if (b[orderBy] === undefined || b[orderBy] < a[orderBy]) {
-    return -1;
+    return -1
   }
   if (a[orderBy] === undefined || b[orderBy] > a[orderBy]) {
-    return 1;
+    return 1
   }
-  return 0;
+  return 0
 }
 
-function stableSort(array, cmp) {
-  const stabilizedThis = array.map((el, index) => [el, index]);
+function stableSort (array, cmp) {
+  const stabilizedThis = array.map((el, index) => [el, index])
   stabilizedThis.sort((a, b) => {
-    const order = cmp(a[0], b[0]);
-    if (order !== 0) return order;
-    return a[1] - b[1];
-  });
-  return stabilizedThis.map(el => el[0]);
+    const order = cmp(a[0], b[0])
+    if (order !== 0) return order
+    return a[1] - b[1]
+  })
+  return stabilizedThis.map(el => el[0])
 }
 
-function getSorting(order, orderBy) {
+function getSorting (order, orderBy) {
   return order === 'desc'
     ? (a, b) => desc(a, b, orderBy)
-    : (a, b) => -desc(a, b, orderBy);
+    : (a, b) => -desc(a, b, orderBy)
 }
-
-
 
 class StockTable extends Component {
   static propTypes = {
@@ -69,12 +67,12 @@ class StockTable extends Component {
     // (itemId | 'all' | 'none') => void
     toggleSelection: PropTypes.func.isRequired,
     // (rows) => void
-    onChangeRowsPerPage: PropTypes.func.isRequired,
+    onChangeRowsPerPage: PropTypes.func.isRequired
   }
 
   static styles = {
     root: {
-      width: '100%',
+      width: '100%'
     },
     tableWrapper: {
       overflowX: 'auto'
@@ -82,7 +80,6 @@ class StockTable extends Component {
   }
 
   handleRequestSort = (even, property) => this.props.onSortClick(property)
-
 
   handleSelectAllClick = event => {
     if (event.target.checked) {
@@ -102,7 +99,7 @@ class StockTable extends Component {
 
   isSelected = id => this.props.selected.indexOf(id) !== -1
 
-  render() {
+  render () {
     const { items, classes, orderBy, order, selected, page, rowsPerPage } = this.props
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, items.length - page * rowsPerPage)
 
@@ -121,7 +118,7 @@ class StockTable extends Component {
             />
             <TableBody>
               {stableSort(items, getSorting(order, orderBy))
-                .slice(page * rowsPerPage, (page+1) * rowsPerPage)
+                .slice(page * rowsPerPage, (page + 1) * rowsPerPage)
                 .map(item => {
                   const isSelected = this.isSelected(item.id)
                   return (

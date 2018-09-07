@@ -9,7 +9,7 @@ import rootEpic from './epics'
 
 const epicMiddleware = createEpicMiddleware()
 
-function configureStore(initialState) {
+function configureStore (initialState) {
   const middlewares = [
     routerMiddleware(history),
     epicMiddleware

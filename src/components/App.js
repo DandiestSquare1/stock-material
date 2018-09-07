@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import { Switch, Route, Redirect } from 'react-router-dom'
@@ -8,7 +8,6 @@ import AppBar from './AppBar'
 import StockTable from '../containers/StockTable'
 
 class App extends Component {
-
   static propTypes = { classes: PropTypes.object.isRequired }
 
   static styles = theme => ({
@@ -17,7 +16,7 @@ class App extends Component {
     }
   })
 
-  render() {
+  render () {
     const { classes } = this.props
     return (
       <React.Fragment>
@@ -33,7 +32,7 @@ class App extends Component {
           </Switch>
         </div>
       </React.Fragment>
-    );
+    )
   }
 }
 

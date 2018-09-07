@@ -1,12 +1,12 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from 'react'
+import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import { ConnectedRouter } from 'connected-react-router'
 import 'typeface-roboto'
 
-import './index.css';
-import App from './components/App';
-import registerServiceWorker from './registerServiceWorker';
+import './index.css'
+import App from './components/App'
+import registerServiceWorker from './registerServiceWorker'
 import { store, history } from './redux'
 
 ReactDOM.render(
@@ -15,5 +15,5 @@ ReactDOM.render(
       <App />
     </ConnectedRouter>
   </Provider>,
-  document.getElementById('root'));
-registerServiceWorker();
+  document.getElementById('root'))
+registerServiceWorker()

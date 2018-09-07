@@ -40,7 +40,7 @@ class AppBar extends React.Component {
   open = () => this.setState({ isOpen: true })
   close = () => this.setState({ isOpen: false })
 
-  render() {
+  render () {
     const { classes } = this.props
     const { isOpen } = this.state
     return (

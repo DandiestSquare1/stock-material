@@ -36,9 +36,9 @@ const mapDispatchToProps = dispatch => ({
   onSortClick: property => dispatch(actions.table.sortBy(property)),
 
   toggleSelection: id => {
-    if(id === 'all') {
+    if (id === 'all') {
       dispatch(actions.table.selectAll.request())
-    } else if (id === 'none'){
+    } else if (id === 'none') {
       dispatch(actions.table.unselectAll())
     } else {
       dispatch(actions.table.toggleItemSelection(id))

@@ -2,7 +2,7 @@ import { createActions } from 'redux-actions'
 
 import table from './table'
 
-const actions =  createActions({
+const actions = createActions({
   ITEMS: {
     DELETE: {
       REQUEST: id => id,

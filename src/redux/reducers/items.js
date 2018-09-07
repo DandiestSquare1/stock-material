@@ -18,7 +18,7 @@ const defaultEntities = {
   '010': { id: '010', name: 'Fries', quantity: 34 },
   '028': { id: '028', name: 'Milk Chocolate', quantity: 98 },
   '029': { id: '029', name: 'Ice Tea', quantity: 3434 },
-  '020': { id: '020', name: 'Water', quantity: 34 },
+  '020': { id: '020', name: 'Water', quantity: 34 }
 }
 
 const defaultStatuses = {
@@ -34,12 +34,12 @@ const defaultStatuses = {
   '010': Status.Loaded,
   '028': Status.Loaded,
   '029': Status.Loaded,
-  '020': Status.Loaded,
+  '020': Status.Loaded
 }
 
 const entities = handleActions({
   [actions.items.add.success]: (state, action) => Object.assign({}, state, {
-    [action.payload.id] : action.payload
+    [action.payload.id]: action.payload
   }),
   [actions.items.delete.success]: (state, action) => pickBy(state, item => action.payload !== item.id)
 }, defaultEntities)
@@ -54,17 +54,15 @@ const status = handleActions({
   [actions.items.delete.success]: (state, action) => pickBy(state, (item, key) => key !== action.payload)
 }, defaultStatuses)
 
-
 const error = handleActions({
-  [actions.items.delete.failure]: (state, { payload: { id, error }}) => ({
+  [actions.items.delete.failure]: (state, { payload: { id, error } }) => ({
     ...state,
     [id]: error
   }),
-  [actions.items.add.failure]: (state, { payload: { item, error }}) => ({
+  [actions.items.add.failure]: (state, { payload: { item, error } }) => ({
     ...state,
     [item.id]: error
   })
 }, {})
-
 
 export default combineReducers({ entities, status, error })
