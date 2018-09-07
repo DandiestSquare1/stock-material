@@ -2,12 +2,14 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import Checkbox from '@material-ui/core/Checkbox'
+import LinearProgress from '@material-ui/core/LinearProgress'
 import Paper from '@material-ui/core/Paper'
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import TablePagination from '@material-ui/core/TablePagination'
+import Tooltip from '@material-ui/core/Tooltip'
 import { withStyles } from '@material-ui/core/styles'
 
 import StockTableHead from './StockTableHead'
@@ -34,7 +36,9 @@ function stableSort(array, cmp) {
 }
 
 function getSorting(order, orderBy) {
-  return order === 'desc' ? (a, b) => desc(a, b, orderBy) : (a, b) => -desc(a, b, orderBy);
+  return order === 'desc'
+    ? (a, b) => desc(a, b, orderBy) 
+    : (a, b) => -desc(a, b, orderBy);
 }
 
 
@@ -42,14 +46,20 @@ function getSorting(order, orderBy) {
 class StockTable extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
-    items: PropTypes.array.isRequired,
+    items: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      quantity: PropTypes.number.isRequired,
+      full: PropTypes.number,
+      level: PropTypes.number
+    })).isRequired,
     // (id | [id]) => void
     onDelete: PropTypes.func.isRequired,
 
     page: PropTypes.number.isRequired,
     rowsPerPage: PropTypes.number.isRequired,
     order: PropTypes.oneOf(['asc', 'desc']).isRequired,
-    orderBy: PropTypes.oneOf(['id', 'name', 'quantity']).isRequired,
+    orderBy: PropTypes.oneOf(['id', 'name', 'quantity', 'level']).isRequired,
     selected: PropTypes.arrayOf(PropTypes.string).isRequired,
 
     // (page) => void
@@ -129,6 +139,18 @@ class StockTable extends Component {
                       <TableCell>{item.id}</TableCell>
                       <TableCell>{item.name}</TableCell>
                       <TableCell numeric>{item.quantity}</TableCell>
+                      <TableCell>
+                        {item.level ? (
+                          <Tooltip title={`${item.quantity} out of ${item.full}`}>
+                            <LinearProgress
+                              variant='determinate'
+                              value={item.level}
+                            />
+                          </Tooltip>
+                        ) : (
+                          <React.Fragment>No full level</React.Fragment>
+                        )}
+                      </TableCell>
                     </TableRow>
                   )
                 })
