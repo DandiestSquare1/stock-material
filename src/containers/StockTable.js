@@ -7,7 +7,12 @@ import actions from '../redux/actions'
 const deleteItem = actions.items.delete
 
 const mapStateToProps = state => ({
-  items: values(state.items.entities),
+  items: values(state.items.entities).map(item => {
+    if (!item.full) { return item }
+    return Object.assign({}, item, {
+      level: Math.min(item.quantity / item.full * 100, 100)
+    })
+  }),
   order: state.table.order,
   orderBy: state.table.orderBy,
   selected: state.table.selected,

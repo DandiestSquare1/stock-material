@@ -11,7 +11,8 @@ import Tooltip from '@material-ui/core/Tooltip'
 const columns = [
   { id: 'id', numeric: false, label: 'ID'},
   { id: 'name', numeric: false, label: 'Name' },
-  { id: 'quantity', numeric: true, label: 'Quantity' }
+  { id: 'quantity', numeric: true, label: 'Quantity' },
+  { id: 'level', numeric: false, label: 'Level' }
 ]
 
 class StockTableHead extends Component {
