@@ -16,10 +16,10 @@ import StockTableHead from './StockTableHead'
 import StockTableToolbar from './StockTableToolbar'
 
 function desc(a, b, orderBy) {
-  if (b[orderBy] < a[orderBy]) {
+  if (b[orderBy] === undefined || b[orderBy] < a[orderBy]) {
     return -1;
   }
-  if (b[orderBy] > a[orderBy]) {
+  if (a[orderBy] === undefined || b[orderBy] > a[orderBy]) {
     return 1;
   }
   return 0;
@@ -37,7 +37,7 @@ function stableSort(array, cmp) {
 
 function getSorting(order, orderBy) {
   return order === 'desc'
-    ? (a, b) => desc(a, b, orderBy) 
+    ? (a, b) => desc(a, b, orderBy)
     : (a, b) => -desc(a, b, orderBy);
 }
 
@@ -139,18 +139,18 @@ class StockTable extends Component {
                       <TableCell>{item.id}</TableCell>
                       <TableCell>{item.name}</TableCell>
                       <TableCell numeric>{item.quantity}</TableCell>
-                      <TableCell>
-                        {item.level ? (
-                          <Tooltip title={`${item.quantity} out of ${item.full}`}>
+                      {item.level ? (
+                        <Tooltip title={`${item.quantity} out of ${item.full}`}>
+                          <TableCell>
                             <LinearProgress
                               variant='determinate'
                               value={item.level}
                             />
-                          </Tooltip>
-                        ) : (
-                          <React.Fragment>No full level</React.Fragment>
-                        )}
-                      </TableCell>
+                          </TableCell>
+                        </Tooltip>
+                      ) : (
+                        <TableCell>No full level</TableCell>
+                      )}
                     </TableRow>
                   )
                 })
