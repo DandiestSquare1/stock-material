@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import Checkbox from '@material-ui/core/Checkbox'
-import LinearProgress from '@material-ui/core/LinearProgress'
 import Paper from '@material-ui/core/Paper'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
@@ -14,6 +13,7 @@ import { withStyles } from '@material-ui/core/styles'
 
 import StockTableHead from './StockTableHead'
 import StockTableToolbar from './StockTableToolbar'
+import StockLevel from './StockLevel'
 
 function desc (a, b, orderBy) {
   if (b[orderBy] === undefined || b[orderBy] < a[orderBy]) {
@@ -139,9 +139,8 @@ class StockTable extends Component {
                       {item.level ? (
                         <Tooltip title={`${item.quantity} out of ${item.full}`}>
                           <TableCell>
-                            <LinearProgress
-                              variant='determinate'
-                              value={item.level}
+                            <StockLevel
+                              level={item.level}
                             />
                           </TableCell>
                         </Tooltip>
