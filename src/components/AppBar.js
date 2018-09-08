@@ -17,6 +17,7 @@ import AddIcon from '@material-ui/icons/Add'
 import { withStyles } from '@material-ui/core/styles'
 
 import SideLink from './SideLink'
+import NewItem from '../containers/NewItem'
 
 class AppBar extends React.Component {
   static propTypes = {
@@ -34,17 +35,22 @@ class AppBar extends React.Component {
   }
 
   state = {
-    isOpen: false
+    isOpen: false,
+    isNewItemOpen: true
   }
 
   open = () => this.setState({ isOpen: true })
   close = () => this.setState({ isOpen: false })
 
+  openNewItem = () => this.setState({ isNewItemOpen: true })
+  closeNewItem = () => this.setState({ isNewItemOpen: false })
+
   render () {
     const { classes } = this.props
-    const { isOpen } = this.state
+    const { isOpen, isNewItemOpen } = this.state
     return (
       <React.Fragment>
+        <NewItem open={isNewItemOpen} onClose={this.closeNewItem}/>
         <Bar position='static'>
           <Toolbar>
             <IconButton
@@ -59,7 +65,7 @@ class AppBar extends React.Component {
             </Typography>
             <div className={classes.spacer} />
             <Tooltip title='Create a new item'>
-              <IconButton color='inherit' aria-label='Create a new item'>
+              <IconButton color='inherit' aria-label='Create a new item' onClick={this.openNewItem}>
                 <AddIcon />
               </IconButton>
             </Tooltip>
