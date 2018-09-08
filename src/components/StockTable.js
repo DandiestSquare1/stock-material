@@ -81,7 +81,9 @@ class StockTable extends Component {
 
   static styles = {
     root: {
-      width: '100%'
+      maxWidth: 800,
+      marginLeft: 'auto',
+      marginRight: 'auto'
     },
     tableWrapper: {
       overflowX: 'auto'
