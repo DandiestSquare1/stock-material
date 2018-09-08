@@ -16,10 +16,10 @@ import StockTableToolbar from './StockTableToolbar'
 import StockLevel from './StockLevel'
 
 function desc (a, b, orderBy) {
-  if (b[orderBy] === undefined || b[orderBy] < a[orderBy]) {
+  if (b[orderBy] < a[orderBy]) {
     return -1
   }
-  if (a[orderBy] === undefined || b[orderBy] > a[orderBy]) {
+  if (b[orderBy] > a[orderBy]) {
     return 1
   }
   return 0
@@ -36,9 +36,18 @@ function stableSort (array, cmp) {
 }
 
 function getSorting (order, orderBy) {
-  return order === 'desc'
+  const sorter = order === 'desc'
     ? (a, b) => desc(a, b, orderBy)
     : (a, b) => -desc(a, b, orderBy)
+  return (a, b) => {
+    if (a[orderBy] === undefined) {
+      return 1
+    }
+    if (b[orderBy] === undefined) {
+      return -1
+    }
+    return sorter(a, b, orderBy)
+  }
 }
 
 class StockTable extends Component {
