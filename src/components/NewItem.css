@@ -1,0 +1,5 @@
+
+/* Since neither material-ui's withStyles() nor React inline style support ::before */
+.OptionnalPanel::before {
+  display: none;
+}

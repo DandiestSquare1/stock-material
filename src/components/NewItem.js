@@ -7,18 +7,44 @@ import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
+import ExpansionPanel from '@material-ui/core/ExpansionPanel'
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
 import TextField from '@material-ui/core/TextField'
+import Typography from '@material-ui/core/Typography'
 import { withStyles } from '@material-ui/core/styles'
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 
-const styles = {
+import './NewItem.css'
+
+const styles = theme => ({
   root: {
     display: 'flex',
     flexDirection: 'column'
   },
   hiddenSubmit: {
     display: 'none'
+  },
+  optionnalContainer: {
+    boxShadow: 'none',
+    marginTop: theme.spacing.unit * 2
+  },
+  optionnalSummary: {
+    margin: 0,
+    padding: 0
+  },
+  optionnalDetails: {
+    padding: 0
+  },
+  liner: {
+    height: '0.8em',
+
+    borderBottom: `1px solid ${theme.palette.text.secondary}`,
+    marginLeft: theme.spacing.unit * 2,
+    marginRight: theme.spacing.unit * 8,
+    flex: 1
   }
-}
+})
 
 class NewItem extends Component {
   static propTypes = {
@@ -55,7 +81,6 @@ class NewItem extends Component {
       name: this.state.name,
       quantity: parseInt(this.state.quantity, 10)
     }
-    console.log(newItem)// eslint-disable-line
     this.props.onSubmit(newItem)
     this.close()
   }
@@ -91,6 +116,19 @@ class NewItem extends Component {
               margin='dense'
               fullWidth
             />
+            <ExpansionPanel className={`${classes.optionnalContainer} NewItem OptionnalPanel`}>
+              <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />} className={classes.optionnalSummary}>
+                <Typography color='textSecondary' variant='subheading'>Optionnal values :</Typography>
+              </ExpansionPanelSummary>
+              <ExpansionPanelDetails className={classes.optionnalDetails}>
+                <TextField
+                  type='number'
+                  label='Full quantity'
+                  helperText='Quantity that is considered "full stock"'
+                  fullWidth
+                />
+              </ExpansionPanelDetails>
+            </ExpansionPanel>
             {/* Needed to submit the form by pressing 'enter' */}
             <input type='submit' className={classes.hiddenSubmit}/>
           </form>
