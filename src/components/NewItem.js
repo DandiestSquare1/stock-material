@@ -56,13 +56,15 @@ class NewItem extends Component {
 
   state = {
     name: '',
-    quantity: ''
+    quantity: '',
+    full: ''
   }
 
   clearState = () => {
     this.setState({
       name: '',
-      quantity: ''
+      quantity: '',
+      full: ''
     })
   }
 
@@ -78,8 +80,11 @@ class NewItem extends Component {
   handleSubmit = (e) => {
     e.preventDefault()
     let newItem = {
-      name: this.state.name,
+      name: this.state.name.trim(),
       quantity: parseInt(this.state.quantity, 10)
+    }
+    if (this.state.full) {
+      newItem.full = parseInt(this.state.full, 10)
     }
     this.props.onSubmit(newItem)
     this.close()
@@ -87,7 +92,7 @@ class NewItem extends Component {
 
   render () {
     const { classes, open } = this.props
-    const { name, quantity } = this.state
+    const { name, quantity, full } = this.state
     return (
       <Dialog
         open={open}
@@ -122,6 +127,8 @@ class NewItem extends Component {
               </ExpansionPanelSummary>
               <ExpansionPanelDetails className={classes.optionnalDetails}>
                 <TextField
+                  value={full}
+                  onChange={this.createChangeHandler('full')}
                   type='number'
                   label='Full quantity'
                   helperText='Quantity that is considered "full stock"'
