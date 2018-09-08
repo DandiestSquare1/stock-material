@@ -8,7 +8,6 @@ import Toolbar from '@material-ui/core/Toolbar'
 import IconButton from '@material-ui/core/IconButton'
 import List from '@material-ui/core/List'
 import Typography from '@material-ui/core/Typography'
-import Tooltip from '@material-ui/core/Tooltip'
 import MenuIcon from '@material-ui/icons/Menu'
 import LabelIcon from '@material-ui/icons/Label'
 import BarChartIcon from '@material-ui/icons/BarChart'
@@ -64,11 +63,9 @@ class AppBar extends React.Component {
               Stock Manager
             </Typography>
             <div className={classes.spacer} />
-            <Tooltip enterDelay={250} title='Create a new item'>
-              <IconButton color='inherit' aria-label='Create a new item' onClick={this.openNewItem}>
-                <AddIcon />
-              </IconButton>
-            </Tooltip>
+            <IconButton color='inherit' aria-label='Create a new item' onClick={this.openNewItem}>
+              <AddIcon />
+            </IconButton>
           </Toolbar>
         </Bar>
         <Drawer open={isOpen} onClose={this.close}>
