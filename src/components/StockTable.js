@@ -142,7 +142,6 @@ class StockTable extends Component {
                       <TableCell padding='checkbox'>
                         <Checkbox checked={isSelected} />
                       </TableCell>
-                      <TableCell>{item.id}</TableCell>
                       <TableCell>{item.name}</TableCell>
                       <TableCell numeric>{item.quantity}</TableCell>
                       {item.level ? (
