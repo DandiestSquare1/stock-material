@@ -36,7 +36,7 @@ class AppBar extends React.Component {
 
   state = {
     isOpen: false,
-    isNewItemOpen: true
+    isNewItemOpen: false
   }
 
   open = () => this.setState({ isOpen: true })
@@ -51,7 +51,7 @@ class AppBar extends React.Component {
     return (
       <React.Fragment>
         <NewItem open={isNewItemOpen} onClose={this.closeNewItem}/>
-        <Bar position='static'>
+        <Bar position='sticky'>
           <Toolbar>
             <IconButton
               color='inherit'
@@ -64,7 +64,7 @@ class AppBar extends React.Component {
               Stock Manager
             </Typography>
             <div className={classes.spacer} />
-            <Tooltip title='Create a new item'>
+            <Tooltip enterDelay={250} title='Create a new item'>
               <IconButton color='inherit' aria-label='Create a new item' onClick={this.openNewItem}>
                 <AddIcon />
               </IconButton>
