@@ -176,6 +176,7 @@ class StockTable extends Component {
           page={page}
           onChangePage={this.handleChangePage}
           onChangeRowsPerPage={this.handleChangeRowsPerPage}
+          rowsPerPageOptions={[10, 25, 100]}
         />
       </Paper>
     )

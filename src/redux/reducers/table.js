@@ -55,5 +55,5 @@ export default handleActions({
   orderBy: 'id',
   selected: [],
   page: 0,
-  rowsPerPage: 5
+  rowsPerPage: 10
 })
