@@ -15,7 +15,7 @@ import Typography from '@material-ui/core/Typography'
 import { withStyles } from '@material-ui/core/styles'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 
-import './NewItem.css'
+import './ItemDialog.css'
 
 const styles = theme => ({
   root: {
