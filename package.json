@@ -6,13 +6,13 @@
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom",
-    "lint": "eslint --fix 'src/**/*.js'",
+    "lint": "eslint --fix 'src/**/*.js' --config .eslintrc.precommit",
     "precommit": "lint-staged"
   },
   "lint-staged": {
     "linters": {
       "src/**/*.js": [
-        "eslint --fix",
+        "eslint --fix --config .eslintrc.precommit",
         "git add"
       ]
     }
