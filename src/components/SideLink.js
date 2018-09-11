@@ -19,7 +19,7 @@ const SideLink = ({ to, text, icon }) => {
 SideLink.propTypes = {
   to: PropTypes.string.isRequired,
   text: PropTypes.string.isRequired,
-  icon: PropTypes.element
+  icon: PropTypes.func
 }
 
 export default SideLink
