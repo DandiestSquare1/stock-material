@@ -50,7 +50,7 @@ const EnhancedTableToolbar = ({ selectedCount, classes, onDeleteClick }) => (
         </Typography>
       )}
     </div>
-    <div className={classes.spacer}/>
+    <div className={classes.spacer} />
     <div className={classes.actions}>
       {selectedCount > 0 ? (
         <Tooltip title='Delete'>

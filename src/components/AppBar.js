@@ -49,7 +49,7 @@ class AppBar extends React.Component {
     const { isOpen, isNewItemOpen } = this.state
     return (
       <React.Fragment>
-        <NewItem open={isNewItemOpen} onClose={this.closeNewItem}/>
+        <NewItem open={isNewItemOpen} onClose={this.closeNewItem} />
         <Bar position='sticky'>
           <Toolbar>
             <IconButton
@@ -74,9 +74,9 @@ class AppBar extends React.Component {
             onClick={this.close}
             onKeyDown={this.close}
           >
-            <SideLink to='/items' text='Stocks' icon={ViewListIcon}/>
-            <SideLink to='/reports' text='Reports' icon={BarChartIcon}/>
-            <SideLink to='/labels' text='Labels' icon={LabelIcon}/>
+            <SideLink to='/items' text='Stocks' icon={ViewListIcon} />
+            <SideLink to='/reports' text='Reports' icon={BarChartIcon} />
+            <SideLink to='/labels' text='Labels' icon={LabelIcon} />
             <SideLink to='/scanner' text='Scanner' />
           </List>
         </Drawer>

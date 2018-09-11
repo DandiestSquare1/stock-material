@@ -137,7 +137,7 @@ class NewItem extends Component {
               </ExpansionPanelDetails>
             </ExpansionPanel>
             {/* Needed to submit the form by pressing 'enter' */}
-            <input type='submit' className={classes.hiddenSubmit}/>
+            <input type='submit' className={classes.hiddenSubmit} />
           </form>
 
         </DialogContent>

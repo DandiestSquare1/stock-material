@@ -44,7 +44,7 @@ class StockTableHead extends Component {
             <TableCell
               key={column.id}
               numeric={column.numeric}
-              sortDirection={orderBy === column.id ? order : false }
+              sortDirection={orderBy === column.id ? order : false}
             >
               <Tooltip
                 title='Sort'

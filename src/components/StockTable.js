@@ -116,7 +116,7 @@ class StockTable extends Component {
 
     return (
       <Paper className={classes.root}>
-        <StockTableToolbar selectedCount={selected.length} onDeleteClick={this.handleDelete}/>
+        <StockTableToolbar selectedCount={selected.length} onDeleteClick={this.handleDelete} />
         <div className={classes.tableWrapper}>
           <Table>
             <StockTableHead

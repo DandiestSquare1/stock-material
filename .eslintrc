@@ -1,3 +1,3 @@
 {
-  "extends": ["eslint:recommended", "react-app", "standard"]
+  "extends": ["react-app", "standard", "standard-react"]
 }
