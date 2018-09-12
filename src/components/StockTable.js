@@ -14,6 +14,7 @@ import { withStyles } from '@material-ui/core/styles'
 import StockTableHead from './StockTableHead'
 import StockTableToolbar from './StockTableToolbar'
 import StockLevel from './StockLevel'
+import EditItem from '../containers/EditItem'
 
 function desc (a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -94,6 +95,11 @@ class StockTable extends Component {
     }
   }
 
+  state = {
+    isEditItemOpen: false,
+    editedItem: null
+  }
+
   handleRequestSort = (even, property) => this.props.onSortClick(property)
 
   handleSelectAllClick = event => {
@@ -109,7 +115,11 @@ class StockTable extends Component {
     this.props.toggleSelection(id)
   }
 
-  handleRowClick = id => () => { console.log(id) }
+  handleRowClick = item => () => {
+    this.setState({ editedItem: item, isEditItemOpen: true })
+  }
+
+  closeEditDialog = () => this.setState({ isEditItemOpen: false })
 
   handleChangePage = (event, page) => this.props.onChangePage(page)
 
@@ -123,8 +133,17 @@ class StockTable extends Component {
     const { items, classes, orderBy, order, selected, page, rowsPerPage } = this.props
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, items.length - page * rowsPerPage)
 
+    const { isEditItemOpen, editedItem } = this.state
+
     return (
       <Paper className={classes.root}>
+        <EditItem
+          open={isEditItemOpen}
+          onClose={this.closeEditDialog}
+          item={editedItem}
+          // see: https://reactjs.org/blog/2018/06/07/you-probably-dont-need-derived-state.html#recommendation-fully-uncontrolled-component-with-a-key
+          key={(editedItem && editedItem.id) || null}
+        />
         <StockTableToolbar selectedCount={selected.length} onDeleteClick={this.handleDelete} />
         <div className={classes.tableWrapper}>
           <Table>
@@ -148,7 +167,7 @@ class StockTable extends Component {
                       aria-checked={isSelected}
                       tabIndex={-1}
                       selected={isSelected}
-                      onClick={this.handleRowClick(item.id)}
+                      onClick={this.handleRowClick(item)}
                     >
                       <TableCell padding='checkbox'>
                         <Checkbox checked={isSelected} onClick={this.handleCheckboxClick(item.id)} />
