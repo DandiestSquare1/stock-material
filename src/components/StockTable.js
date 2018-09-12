@@ -52,7 +52,10 @@ function getSorting (order, orderBy) {
 
 class StockTable extends Component {
   static propTypes = {
+    // style classes
     classes: PropTypes.object.isRequired,
+
+    // table content
     items: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
@@ -63,6 +66,7 @@ class StockTable extends Component {
     // (id | [id]) => void
     onDelete: PropTypes.func.isRequired,
 
+    // table props
     page: PropTypes.number.isRequired,
     rowsPerPage: PropTypes.number.isRequired,
     order: PropTypes.oneOf(['asc', 'desc']).isRequired,
@@ -100,7 +104,12 @@ class StockTable extends Component {
     }
   }
 
-  handleClick = (event, id) => this.props.toggleSelection(id)
+  handleCheckboxClick = id => (event) => {
+    event.stopPropagation()
+    this.props.toggleSelection(id)
+  }
+
+  handleRowClick = id => () => { console.log(id) }
 
   handleChangePage = (event, page) => this.props.onChangePage(page)
 
@@ -135,14 +144,14 @@ class StockTable extends Component {
                   return (
                     <TableRow key={item.id}
                       hover
-                      onClick={event => this.handleClick(event, item.id)}
                       role='checkbox'
                       aria-checked={isSelected}
                       tabIndex={-1}
                       selected={isSelected}
+                      onClick={this.handleRowClick(item.id)}
                     >
                       <TableCell padding='checkbox'>
-                        <Checkbox checked={isSelected} />
+                        <Checkbox checked={isSelected} onClick={this.handleCheckboxClick(item.id)} />
                       </TableCell>
                       <TableCell>{item.name}</TableCell>
                       <TableCell numeric>{item.quantity}</TableCell>
