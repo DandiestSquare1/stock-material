@@ -42,15 +42,31 @@ const entities = handleActions({
   [actions.items.add.success]: (state, action) => Object.assign({}, state, {
     [action.payload.id]: action.payload
   }),
+  [actions.items.update.success]: (state, { payload }) => Object.assign({}, state, {
+    [payload.id]: payload
+  }),
   [actions.items.delete.success]: (state, action) => pickBy(state, item => action.payload !== item.id),
   [actions.items.deleteMultiple.success]: (state, action) => pickBy(state, item => !action.payload.includes(item.id))
 }, defaultEntities)
 
 const status = handleActions({
+  // Create
   [actions.items.add.success]: (state, action) => Object.assign({}, state, {
     [action.payload.id]: Status.Loaded
   }),
 
+  // Update
+  [actions.items.update.request]: (state, { payload }) => Object.assign({}, state, {
+    [payload.id]: Status.Updating
+  }),
+  [actions.items.update.success]: (state, { payload }) => Object.assign({}, state, {
+    [payload.id]: Status.Loaded
+  }),
+  [actions.items.update.failure]: (state, { payload }) => Object.assign({}, state, {
+    [payload.id]: Status.Error
+  }),
+
+  // Delete
   [actions.items.delete.request]: (state, action) => Object.assign({}, state, {
     [action.payload]: Status.Deleting
   }),
@@ -59,6 +75,7 @@ const status = handleActions({
     [action.payload]: Status.Error
   }),
 
+  // Delete multiple
   [actions.items.deleteMultiple.request]: (state, action) => {
     let nextState = Object.assign({}, state)
     forEach(action.payload, itemId => {
@@ -87,7 +104,11 @@ const error = handleActions({
   [actions.items.add.failure]: (state, { payload: { item, error } }) => ({
     ...state,
     [item.id]: error
+  }),
+  [actions.items.update.failure]: (state, { payload: { item, error } }) => Object.assign({}, state, {
+    [item.id]: error
   })
+
 }, {})
 
 export default combineReducers({ entities, status, error })

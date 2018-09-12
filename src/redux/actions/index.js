@@ -18,6 +18,11 @@ const actions = createActions({
       REQUEST: item => item,
       SUCCESS: item => item,
       FAILURE: (item, error) => ({ item, error: error.message })
+    },
+    UPDATE: {
+      REQUEST: item => item,
+      SUCCESS: item => item,
+      FAILURE: (item, error) => ({ item, error: error.message })
     }
   },
   TABLE: table
