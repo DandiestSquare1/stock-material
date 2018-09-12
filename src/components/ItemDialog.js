@@ -113,6 +113,9 @@ class ItemDialog extends Component {
     if (this.state.full) {
       newItem.full = parseInt(this.state.full, 10)
     }
+    if (this.props.item) {
+      newItem.id = this.props.item.id
+    }
     this.props.onSubmit(newItem)
     this.close()
   }
