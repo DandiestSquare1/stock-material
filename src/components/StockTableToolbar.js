@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 
@@ -9,6 +9,8 @@ import IconButton from '@material-ui/core/IconButton'
 import DeleteIcon from '@material-ui/icons/Delete'
 import { withStyles } from '@material-ui/core/styles'
 import { lighten } from '@material-ui/core/styles/colorManipulator'
+
+import Alert from './Alert'
 
 const styles = theme => ({
   root: {
@@ -35,40 +37,61 @@ const styles = theme => ({
   }
 })
 
-const EnhancedTableToolbar = ({ selectedCount, classes, onDeleteClick }) => (
-  <Toolbar className={classNames(classes.root, {
-    [classes.highlight]: selectedCount > 0
-  })}>
-    <div className={classes.title}>
-      {selectedCount > 0 ? (
-        <Typography color='inherit' variant='subheading'>
-          {selectedCount} selected
-        </Typography>
-      ) : (
-        <Typography variant='title'>
-          Items
-        </Typography>
-      )}
-    </div>
-    <div className={classes.spacer} />
-    <div className={classes.actions}>
-      {selectedCount > 0 ? (
-        <Tooltip title='Delete'>
-          <IconButton aria-label='Delete' onClick={onDeleteClick}>
-            <DeleteIcon />
-          </IconButton>
-        </Tooltip>
-      ) : (
-        null
-      )}
-    </div>
-  </Toolbar>
-)
+class EnhancedTableToolbar extends Component {
+  static propTypes = {
+    selectedCount: PropTypes.number.isRequired,
+    classes: PropTypes.object.isRequired,
+    onDeleteClick: PropTypes.func.isRequired
+  }
 
-EnhancedTableToolbar.propTypes = {
-  selectedCount: PropTypes.number.isRequired,
-  classes: PropTypes.object.isRequired,
-  onDeleteClick: PropTypes.func.isRequired
+  state = {
+    confirmOpen: false
+  }
+
+  openConfirm = () => this.setState({ confirmOpen: true })
+
+  closeConfirm = () => this.setState({ confirmOpen: false })
+
+  render () {
+    const { selectedCount, classes, onDeleteClick } = this.props
+    const { confirmOpen } = this.state
+    return (
+      <Toolbar className={classNames(classes.root, {
+        [classes.highlight]: selectedCount > 0
+      })}>
+        <Alert
+          open={confirmOpen}
+          onClose={this.closeConfirm}
+          onConfirm={onDeleteClick}
+          title={`Really delete ${selectedCount} items ?`}
+          description='Once confirmed, you cannot retrieve the lost data. Blah blah blah...'
+        />
+        <div className={classes.title}>
+          {selectedCount > 0 ? (
+            <Typography color='inherit' variant='subheading'>
+              {selectedCount} selected
+            </Typography>
+          ) : (
+            <Typography variant='title'>
+              Items
+            </Typography>
+          )}
+        </div>
+        <div className={classes.spacer} />
+        <div className={classes.actions}>
+          {selectedCount > 0 ? (
+            <Tooltip title='Delete'>
+              <IconButton aria-label='Delete' onClick={this.openConfirm}>
+                <DeleteIcon />
+              </IconButton>
+            </Tooltip>
+          ) : (
+            null
+          )}
+        </div>
+      </Toolbar>
+    )
+  }
 }
 
 export default withStyles(styles)(EnhancedTableToolbar)
