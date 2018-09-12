@@ -50,10 +50,15 @@ const status = handleActions({
   [actions.items.add.success]: (state, action) => Object.assign({}, state, {
     [action.payload.id]: Status.Loaded
   }),
+
   [actions.items.delete.request]: (state, action) => Object.assign({}, state, {
     [action.payload]: Status.Deleting
   }),
   [actions.items.delete.success]: (state, action) => pickBy(state, (item, key) => key !== action.payload),
+  [actions.items.delete.failure]: (state, action) => Object.assign({}, state, {
+    [action.payload]: Status.Error
+  }),
+
   [actions.items.deleteMultiple.request]: (state, action) => {
     let nextState = Object.assign({}, state)
     forEach(action.payload, itemId => {
@@ -61,9 +66,10 @@ const status = handleActions({
     })
     return nextState
   },
-  [actions.items.deleteMultiple.success]: (state, action) =>
-    pickBy(state, (item, key) =>
-      !action.payload.includes(key))
+  [actions.items.deleteMultiple.success]: (state, action) => pickBy(state, (item, key) => !action.payload.includes(key)),
+  [actions.items.deleteMultiple.failure]: (state, action) => Object.assign({}, state, {
+    [action.payload]: Status.Error
+  })
 }, defaultStatuses)
 
 const error = handleActions({
@@ -71,7 +77,7 @@ const error = handleActions({
     ...state,
     [id]: error
   }),
-  [actions.items.deleteMultiple]: (state, { payload: { ids, error } }) => {
+  [actions.items.deleteMultiple.failure]: (state, { payload: { ids, error } }) => {
     let nextState = Object.assign({}, state)
     forEach(ids, itemId => {
       nextState[itemId] = error

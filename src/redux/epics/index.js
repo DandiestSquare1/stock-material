@@ -20,6 +20,7 @@ const deleteItemEpic = action$ => action$.pipe(
 
 const deleteMultipleEpic = action$ => action$.pipe(
   ofType(actions.items.deleteMultiple.request),
+  // map(action => actions.items.deleteMultiple.failure(action.payload, new Error('lklkj')))
   switchMap(({ payload }) => of(
     actions.items.deleteMultiple.success(payload),
     actions.table.unselectAll()
