@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux'
 import { handleActions } from 'redux-actions'
 import pickBy from 'lodash/pickBy'
+import forEach from 'lodash/forEach'
 
 import Status from '../status'
 import actions from '../actions'
@@ -41,7 +42,8 @@ const entities = handleActions({
   [actions.items.add.success]: (state, action) => Object.assign({}, state, {
     [action.payload.id]: action.payload
   }),
-  [actions.items.delete.success]: (state, action) => pickBy(state, item => action.payload !== item.id)
+  [actions.items.delete.success]: (state, action) => pickBy(state, item => action.payload !== item.id),
+  [actions.items.deleteMultiple.success]: (state, action) => pickBy(state, item => !action.payload.includes(item.id))
 }, defaultEntities)
 
 const status = handleActions({
@@ -51,7 +53,17 @@ const status = handleActions({
   [actions.items.delete.request]: (state, action) => Object.assign({}, state, {
     [action.payload]: Status.Deleting
   }),
-  [actions.items.delete.success]: (state, action) => pickBy(state, (item, key) => key !== action.payload)
+  [actions.items.delete.success]: (state, action) => pickBy(state, (item, key) => key !== action.payload),
+  [actions.items.deleteMultiple.request]: (state, action) => {
+    let nextState = Object.assign({}, state)
+    forEach(action.payload, itemId => {
+      nextState[itemId] = Status.Deleting
+    })
+    return nextState
+  },
+  [actions.items.deleteMultiple.success]: (state, action) =>
+    pickBy(state, (item, key) =>
+      !action.payload.includes(key))
 }, defaultStatuses)
 
 const error = handleActions({
@@ -59,6 +71,13 @@ const error = handleActions({
     ...state,
     [id]: error
   }),
+  [actions.items.deleteMultiple]: (state, { payload: { ids, error } }) => {
+    let nextState = Object.assign({}, state)
+    forEach(ids, itemId => {
+      nextState[itemId] = error
+    })
+    return nextState
+  },
   [actions.items.add.failure]: (state, { payload: { item, error } }) => ({
     ...state,
     [item.id]: error

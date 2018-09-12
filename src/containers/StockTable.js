@@ -5,6 +5,7 @@ import StockTable from '../components/StockTable'
 import actions from '../redux/actions'
 
 const deleteItem = actions.items.delete
+const deleteMultipleItems = actions.items.deleteMultiple
 
 const mapStateToProps = state => ({
   items: values(state.items.entities).map(item => {
@@ -21,11 +22,11 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  onDelete: ids => {
-    if (typeof ids === 'string') {
-      dispatch(deleteItem.request(ids))
+  onDelete: id => {
+    if (Array.isArray(id)) {
+      dispatch(deleteMultipleItems.request(id))
     } else {
-      ids.map(id => dispatch(deleteItem.request(id)))
+      dispatch(deleteItem.request(id))
     }
   },
 

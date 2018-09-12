@@ -9,6 +9,11 @@ const actions = createActions({
       SUCCESS: id => id,
       FAILURE: (id, error) => ({ id, error: error.message })
     },
+    DELETE_MULTIPLE: {
+      REQUEST: ids => ids,
+      SUCCESS: ids => ids,
+      FAILURE: (ids, error) => ({ ids, error: error.message })
+    },
     ADD: {
       REQUEST: item => item,
       SUCCESS: item => item,

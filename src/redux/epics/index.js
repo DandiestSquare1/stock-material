@@ -1,5 +1,6 @@
 import { combineEpics } from 'redux-observable'
-import { filter, map } from 'rxjs/operators'
+import { filter, map, switchMap } from 'rxjs/operators'
+import { of } from 'rxjs'
 import uuid from 'uuid/v4'
 
 import actions from '../actions'
@@ -10,7 +11,19 @@ function ofType (type) {
 
 const deleteItemEpic = action$ => action$.pipe(
   ofType(actions.items.delete.request),
-  map(action => actions.items.delete.success(action.payload))
+  // map(action => actions.items.delete.success(action.payload))
+  switchMap(action => of(
+    actions.items.delete.success(action.payload),
+    actions.table.unselectAll()
+  ))
+)
+
+const deleteMultipleEpic = action$ => action$.pipe(
+  ofType(actions.items.deleteMultiple.request),
+  switchMap(({ payload }) => of(
+    actions.items.deleteMultiple.success(payload),
+    actions.table.unselectAll()
+  ))
 )
 
 const addItemEpic = action$ => action$.pipe(
@@ -25,6 +38,7 @@ const selectAllEpic = (action$, state) => action$.pipe(
 
 export default combineEpics(
   deleteItemEpic,
+  deleteMultipleEpic,
   addItemEpic,
   selectAllEpic
 )
