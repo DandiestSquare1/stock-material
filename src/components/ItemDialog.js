@@ -88,11 +88,6 @@ class ItemDialog extends Component {
         full: ''
       })
     }
-    this.setState({
-      name: '',
-      quantity: '',
-      full: ''
-    })
   }
 
   close = () => {
@@ -123,15 +118,21 @@ class ItemDialog extends Component {
   render () {
     const { classes, open } = this.props
     const { name, quantity, full } = this.state
+    const editing = !!this.props.item
     return (
       <Dialog
         open={open}
         onClose={this.close}
       >
-        <DialogTitle>New Item</DialogTitle>
+        <DialogTitle>{editing ? 'Edit Item' : 'New Item'}</DialogTitle>
         <DialogContent className={classes.root}>
 
-          <DialogContentText>Fill the following form to create a new item.</DialogContentText>
+          <DialogContentText>
+            {editing
+              ? 'Modify the following form to edit an existing item.'
+              : 'Fill the following form to create a new item.'
+            }
+          </DialogContentText>
           <form onSubmit={this.handleSubmit}>
             <TextField
               value={name}
