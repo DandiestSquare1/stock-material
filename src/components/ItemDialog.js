@@ -117,7 +117,7 @@ class ItemDialog extends Component {
       newItem.id = this.props.item.id
     }
     this.props.onSubmit(newItem)
-    this.close()
+    this.props.onClose()
   }
 
   render () {
