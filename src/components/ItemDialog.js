@@ -14,6 +14,7 @@ import TextField from '@material-ui/core/TextField'
 import Typography from '@material-ui/core/Typography'
 import { withStyles } from '@material-ui/core/styles'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
+import withMobileDialog from '@material-ui/core/withMobileDialog'
 
 import './ItemDialog.css'
 
@@ -48,7 +49,11 @@ const styles = theme => ({
 
 class ItemDialog extends Component {
   static propTypes = {
+    /* Provided by the withStyles wrapper. */
     classes: PropTypes.object.isRequired,
+    /* Provided by the withMobileDialog wrapper. */
+    fullScreen: PropTypes.bool,
+
     open: PropTypes.bool,
     onClose: PropTypes.func,
     onSubmit: PropTypes.func.isRequired,
@@ -116,11 +121,12 @@ class ItemDialog extends Component {
   }
 
   render () {
-    const { classes, open } = this.props
+    const { classes, open, fullScreen } = this.props
     const { name, quantity, full } = this.state
     const editing = !!this.props.item
     return (
       <Dialog
+        fullScreen={fullScreen}
         open={open}
         onClose={this.close}
       >
@@ -181,4 +187,6 @@ class ItemDialog extends Component {
   }
 }
 
-export default withStyles(styles)(ItemDialog)
+export default withMobileDialog()(
+  withStyles(styles)(ItemDialog)
+)
