@@ -36,7 +36,7 @@ class StockTableHead extends Component {
           <TableCell padding='checkbox'>
             <Checkbox
               indeterminate={selectedRowCount > 0 && selectedRowCount < rowCount}
-              checked={rowCount === selectedRowCount}
+              checked={rowCount > 0 && rowCount === selectedRowCount}
               onChange={onSelectAllClick}
             />
           </TableCell>
