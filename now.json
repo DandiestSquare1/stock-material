@@ -1,4 +1,6 @@
 {
+  "name": "stock-material",
+  "alias": "stockrr.now.sh",
   "type": "static",
   "static": {
     "rewrites": [
