@@ -1,8 +1,7 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 
 import Checkbox from '@material-ui/core/Checkbox'
-import Paper from '@material-ui/core/Paper'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
@@ -136,7 +135,7 @@ class StockTable extends Component {
     const { isEditItemOpen, editedItem } = this.state
 
     return (
-      <Paper className={classes.root}>
+      <Fragment>
         <EditItem
           open={isEditItemOpen}
           onClose={this.closeEditDialog}
@@ -206,7 +205,7 @@ class StockTable extends Component {
           onChangeRowsPerPage={this.handleChangeRowsPerPage}
           rowsPerPageOptions={[10, 25, 100]}
         />
-      </Paper>
+      </Fragment>
     )
   }
 }
