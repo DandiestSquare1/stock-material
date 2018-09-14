@@ -17,8 +17,15 @@ const About = ({ classes }) => (
       <Typography gutterBottom variant='title'>About</Typography>
       <Typography paragraph>
         {'The sources are are available '}
-        <Link to='http://github.com/hissalht/stock-material'>on GitHub</Link>
+        <Link to='http://github.com/hissalht/stock-material'>on the GitHub reposirtory</Link>
         {'.'}
+      </Typography>
+      <Typography paragraphy>
+        {'You can learn more about me on my '}
+        <Link to='https://github.com/hissalht'>Github</Link>
+        {' and '}
+        <Link to='https://www.linkedin.com/in/adrien-boutigny/'>Linkedin</Link>
+        {' profiles.'}
       </Typography>
     </div>
   </Fragment>
