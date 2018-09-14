@@ -4,12 +4,14 @@ import PropTypes from 'prop-types'
 // material imports
 import Bar from '@material-ui/core/AppBar'
 import Drawer from '@material-ui/core/Drawer'
+import Divider from '@material-ui/core/Divider'
 import Toolbar from '@material-ui/core/Toolbar'
 import IconButton from '@material-ui/core/IconButton'
 import List from '@material-ui/core/List'
 import Typography from '@material-ui/core/Typography'
 import MenuIcon from '@material-ui/icons/Menu'
 import LabelIcon from '@material-ui/icons/Label'
+import HelpIcon from '@material-ui/icons/Help'
 import BarChartIcon from '@material-ui/icons/BarChart'
 import ViewListIcon from '@material-ui/icons/ViewList'
 import AddIcon from '@material-ui/icons/Add'
@@ -23,15 +25,20 @@ class AppBar extends React.Component {
     classes: PropTypes.object.isRequired
   }
 
-  static styles = {
+  static styles = theme => ({
     appTitle: {
       marginLeft: 24,
       flex: '0 0 auto'
     },
     spacer: {
       flex: '1 1 100%'
+    },
+    drawerTitle: {
+      margin: theme.spacing.unit * 2,
+      fontSize: 21,
+      fontWeight: 500
     }
-  }
+  })
 
   state = {
     isOpen: false,
@@ -69,6 +76,15 @@ class AppBar extends React.Component {
           </Toolbar>
         </Bar>
         <Drawer open={isOpen} onClose={this.close}>
+          <Typography
+            variant='headline'
+            color='textSecondary'
+            gutterBottom
+            className={classes.drawerTitle}
+          >
+            Stock Material
+          </Typography>
+          <Divider />
           <List
             tabIndex={0}
             onClick={this.close}
@@ -78,6 +94,7 @@ class AppBar extends React.Component {
             <SideLink to='/reports' text='Reports' icon={BarChartIcon} />
             <SideLink to='/labels' text='Labels' icon={LabelIcon} />
             <SideLink to='/scanner' text='Scanner' />
+            <SideLink to='/about' text='About' icon={HelpIcon} />
           </List>
         </Drawer>
       </React.Fragment>
